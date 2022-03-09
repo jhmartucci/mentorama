@@ -10,7 +10,7 @@ public class GenericControllerAdvice {
 
     @ExceptionHandler({AlunoInexistenteException.class})
     public ResponseEntity verificaExeptions(final AlunoInexistenteException exception){
-        return new ResponseEntity("Aluno não existe!", HttpStatus.NOT_FOUND);
+        return new ResponseEntity( HttpStatus.NOT_FOUND);
     }
 
 }

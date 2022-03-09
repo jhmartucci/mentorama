@@ -28,22 +28,16 @@ public class AlunosService {
         return alunosList;
     }
     public Alunos buscaPorID(Integer id){
-         if(id != null){
-             return this.alunosList
-                     .stream()
-                     .filter(al-> al.getId().equals(id))
-                     .findFirst().orElse(null);
-         }
-         if (alunosList.isEmpty()){
-             throw new AlunoInexistenteException();
-         }
-         return null;
+        return alunosList.stream()
+                .filter(al-> al.getId().equals(id))
+                .findFirst()
+                .orElseThrow(AlunoInexistenteException::new);
     }
     public Alunos buscaPorIdade(Integer idade){
         return alunosList.stream()
                 .filter(al-> al.getIdade().equals(idade))
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(AlunoInexistenteException::new);
     }
     public ResponseEntity<Integer> cadastraAluno(Alunos alunos){
         if(alunos.getId() == null){
