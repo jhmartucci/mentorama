@@ -15,13 +15,13 @@ public class FilmesRepository {
     public FilmesRepository() {
         this.filmesList = new ArrayList<>();
     }
+    public List<Filmes> findAll(final String nome){
+        return filmesList.stream()
+                .filter(fil-> fil.getNome().contains(nome))
+                .collect(Collectors.toList());
+    }
     public List<Filmes> findAll(){
         return filmesList;
-    }
-    public List<Filmes> findAll(final String filmes){
-        return filmesList.stream()
-                .filter(fil-> fil.getNome().contains(filmes))
-                .collect(Collectors.toList());
     }
     public Filmes buscaPorId(Integer id){
         return filmesList.stream()
@@ -38,13 +38,13 @@ public class FilmesRepository {
     }
     public void update(final Filmes filmes){
         filmesList.stream().filter(fil-> fil.getId().equals(filmes.getId()))
-                .forEach(fil-> fil.setNome(fil.getNome()));
+                .forEach(fil-> fil.setNome(filmes.getNome()));
         filmesList.stream().filter(fil-> fil.getId().equals(filmes.getId()))
-                .forEach(fil-> fil.setNomeDiretor(fil.getNomeDiretor()));
+                .forEach(fil-> fil.setNomeDiretor(filmes.getNomeDiretor()));
         filmesList.stream().filter(fil-> fil.getId().equals(filmes.getId()))
-                .forEach(fil-> fil.setAno(fil.getAno()));
+                .forEach(fil-> fil.setAno(filmes.getAno()));
         filmesList.stream().filter(fil-> fil.getId().equals(filmes.getId()))
-                .forEach(fil-> fil.setNota(fil.getNota()));
+                .forEach(fil-> fil.setNota(filmes.getNota()));
     }
     public void delete(Integer id){
         filmesList.removeIf(fil-> fil.getId().equals(id));

@@ -17,11 +17,11 @@ public class FilmesService implements IFilmes {
     private FilmesRepository filmesRepository;
 
     @Override
-    public List<Filmes> findAll(String filmes) {
-        if(filmes != null){
-            return filmesRepository.findAll(filmes);
+    public List<Filmes> findAll(String nome) {
+        if(nome != null){
+            return filmesRepository.findAll(nome);
         }
-        if (filmes.isEmpty() || filmes == null){
+        if(filmesRepository.findAll().isEmpty()){
             throw new FilmesInexistenteException();
         }
         return filmesRepository.findAll();
@@ -58,20 +58,16 @@ public class FilmesService implements IFilmes {
 
     @Override
     public void update(Filmes filmes) {
-        if(filmes != null){
+        if(filmes.getNota() >= 1 || filmes.getAno() <= 5){
             filmesRepository.update(filmes);
-        }else {
-            throw new FilmesInexistenteException();
+        }
+        if(filmes.getNota() < 1 || filmes.getNota() >5){
+            throw new IlegalOcorrenciaException();
         }
     }
 
     @Override
     public void delete(Integer id) {
-        if(id != null){
-            filmesRepository.delete(id);
-        }else{
-            throw new FilmesInexistenteException();
-        }
+        filmesRepository.delete(id);
     }
-
 }

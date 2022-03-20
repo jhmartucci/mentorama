@@ -19,9 +19,9 @@ public class FilmesController {
     private FilmesService filmesService;
 
     @GetMapping
-    public List<Filmes> findAll(@RequestParam(required = false) final String filmes){
+    public List<Filmes> findAll(@RequestParam(required = false) final String nome){
         try {
-            return filmesService.findAll(filmes);
+            return filmesService.findAll(nome);
         }catch (FilmesInexistenteException exception){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
@@ -46,21 +46,17 @@ public class FilmesController {
     }
     @PutMapping
     public ResponseEntity update(@RequestBody final Filmes filmes){
-        try{
+        try {
             filmesService.update(filmes);
             return new ResponseEntity(HttpStatus.NO_CONTENT);
-        }catch (FilmesInexistenteException exception){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }catch (IlegalOcorrenciaException exception){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
         }
     }
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable("id") Integer id){
-        try {
-            filmesService.delete(id);
-            return new ResponseEntity(HttpStatus.NO_CONTENT);
-        }catch (FilmesInexistenteException exception){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
+        filmesService.delete(id);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
 }
